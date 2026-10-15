@@ -1,0 +1,9 @@
+# Build artifacts
+*.o
+*.d
+risk_engine
+
+# Editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
