@@ -1,0 +1,70 @@
+name: Generate reproducible risk chart
+on:
+  push:
+    branches: [docs/visual-readme-20261123]
+    paths: [.github/workflows/render-readme.yml]
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile original C engine
+        run: make
+      - name: Record real VaR estimates and render SVG
+        run: |
+          mkdir -p docs/results docs/charts
+          python3 <<'PY'
+          from pathlib import Path
+          import subprocess, csv, re, html
+          seeds = list(range(42, 50))
+          rows = []
+          for seed in seeds:
+              p = subprocess.run(['./risk_engine','4','60000','100','100','0.05','0.20','0.25',str(seed)], text=True, capture_output=True, check=True)
+              Path('docs/results/example-run.txt').write_text(p.stdout, encoding='utf-8') if seed == 42 else None
+              def extract(s):
+                  m=re.search(s+r'\s*:\s*([+-]?[0-9]+(?:\.[0-9]+)?)',p.stdout)
+                  if not m: raise RuntimeError(f'Cannot parse {s} for seed {seed}:\n{p.stdout}')
+                  return float(m.group(1))
+              rows.append({'seed':seed,'var95':extract(r'95% 1-day VaR'),'var99':extract(r'99% 1-day VaR'),'runtime_s':extract(r'Wall-clock runtime')})
+          with open('docs/results/seed-stability.csv','w',newline='',encoding='utf-8') as f:
+              w=csv.DictWriter(f,fieldnames=['seed','var95','var99','runtime_s']);w.writeheader();w.writerows(rows)
+          W,H=1040,495;left,right,top,bottom=90,960,140,415
+          vals=[r[k] for r in rows for k in ['var95','var99']]
+          lo=min(vals)*.90;hi=max(vals)*1.08
+          xx=lambda i:left+(right-left)*i/(len(rows)-1)
+          yy=lambda v:bottom-(v-lo)/(hi-lo)*(bottom-top)
+          svg=[f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="t d">',
+               '<title id="t">Actual seeded Monte Carlo VaR results from C engine</title>',
+               '<desc id="d">95th and 99th percentile one-day Value at Risk estimates over eight independent seeds. Each run uses 4 worker processes and 60000 simulations, with the same option parameters. Source results saved as CSV.</desc>',
+               '<rect width="1040" height="495" rx="18" fill="#101a29"/>',
+               '<text x="66" y="54" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#f1f6ff">How stable are the tail-risk estimates?</text>',
+               '<text x="67" y="84" font-family="Arial,sans-serif" font-size="14" fill="#a7bbd2">Actual C engine output · European call · 60,000 paths / seed · 4 workers · 1-day horizon</text>']
+          for k in range(5):
+              v=lo+(hi-lo)*k/4;y=yy(v)
+              svg += [f'<path d="M{left} {y:.1f}H{right}" stroke="#263b52" stroke-width="1"/>',
+                      f'<text x="{left-15}" y="{y+5:.1f}" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">{v:.3f}</text>']
+          for i,r in enumerate(rows):
+              svg += [f'<text x="{xx(i):.1f}" y="{bottom+29}" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">{r["seed"]}</text>']
+          for key,color,label in [('var95','#6cd6bc','95% VaR'),('var99','#dfa6ff','99% VaR')]:
+              pts=' '.join(f'{xx(i):.1f},{yy(r[key]):.1f}' for i,r in enumerate(rows))
+              svg += [f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="3.5" stroke-linejoin="round"/>']
+              for i,r in enumerate(rows):svg += [f'<circle cx="{xx(i):.1f}" cy="{yy(r[key]):.1f}" r="5" fill="{color}" stroke="#111c2b" stroke-width="2"/>']
+          svg += ['<circle cx="682" cy="113" r="6" fill="#6cd6bc"/><text x="697" y="118" font-family="Arial,sans-serif" font-size="14" fill="#dceafb">95% VaR</text>',
+                  '<circle cx="807" cy="113" r="6" fill="#dfa6ff"/><text x="822" y="118" font-family="Arial,sans-serif" font-size="14" fill="#dceafb">99% VaR</text>',
+                  '<text x="526" y="474" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" fill="#a7bbd2">Random seed (fixed model configuration)</text>',
+                  '</svg>']
+          Path('docs/charts/seed-stability.svg').write_text('\n'.join(svg),encoding='utf-8')
+          print('VaR results:')
+          for row in rows:print(row)
+          PY
+      - name: Commit actual results and plot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/results/ docs/charts/
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: add reproducible C Monte Carlo risk chart and raw seed outputs"
+          git push origin HEAD:docs/visual-readme-20261123
