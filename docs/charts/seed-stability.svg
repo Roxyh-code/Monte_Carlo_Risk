@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 495" role="img" aria-labelledby="t d">
+<title id="t">Actual seeded Monte Carlo VaR results from C engine</title>
+<desc id="d">95th and 99th percentile one-day Value at Risk estimates over eight independent seeds. Each run uses 4 worker processes and 60000 simulations, with the same option parameters. Source results saved as CSV.</desc>
+<rect width="1040" height="495" rx="18" fill="#101a29"/>
+<text x="66" y="54" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#f1f6ff">How stable are the tail-risk estimates?</text>
+<text x="67" y="84" font-family="Arial,sans-serif" font-size="14" fill="#a7bbd2">Actual C engine output · European call · 60,000 paths / seed · 4 workers · 1-day horizon</text>
+<path d="M90 415.0H960" stroke="#263b52" stroke-width="1"/>
+<text x="75" y="420.0" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">0.995</text>
+<path d="M90 346.2H960" stroke="#263b52" stroke-width="1"/>
+<text x="75" y="351.2" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">1.157</text>
+<path d="M90 277.5H960" stroke="#263b52" stroke-width="1"/>
+<text x="75" y="282.5" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">1.319</text>
+<path d="M90 208.8H960" stroke="#263b52" stroke-width="1"/>
+<text x="75" y="213.8" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">1.480</text>
+<path d="M90 140.0H960" stroke="#263b52" stroke-width="1"/>
+<text x="75" y="145.0" font-family="monospace" font-size="13" text-anchor="end" fill="#93aac3">1.642</text>
+<text x="90.0" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">42</text>
+<text x="214.3" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">43</text>
+<text x="338.6" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">44</text>
+<text x="462.9" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">45</text>
+<text x="587.1" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">46</text>
+<text x="711.4" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">47</text>
+<text x="835.7" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">48</text>
+<text x="960.0" y="444" font-family="monospace" font-size="13" text-anchor="middle" fill="#a4bad1">49</text>
+<polyline points="90.0,368.0 214.3,361.6 338.6,364.0 462.9,363.2 587.1,360.5 711.4,360.9 835.7,363.6 960.0,361.8" fill="none" stroke="#6cd6bc" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="90.0" cy="368.0" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="214.3" cy="361.6" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="338.6" cy="364.0" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="462.9" cy="363.2" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="587.1" cy="360.5" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="711.4" cy="360.9" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="835.7" cy="363.6" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<circle cx="960.0" cy="361.8" r="5" fill="#6cd6bc" stroke="#111c2b" stroke-width="2"/>
+<polyline points="90.0,196.8 214.3,196.6 338.6,195.1 462.9,197.7 587.1,194.0 711.4,195.3 835.7,193.7 960.0,191.7" fill="none" stroke="#dfa6ff" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="90.0" cy="196.8" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="214.3" cy="196.6" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="338.6" cy="195.1" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="462.9" cy="197.7" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="587.1" cy="194.0" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="711.4" cy="195.3" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="835.7" cy="193.7" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="960.0" cy="191.7" r="5" fill="#dfa6ff" stroke="#111c2b" stroke-width="2"/>
+<circle cx="682" cy="113" r="6" fill="#6cd6bc"/><text x="697" y="118" font-family="Arial,sans-serif" font-size="14" fill="#dceafb">95% VaR</text>
+<circle cx="807" cy="113" r="6" fill="#dfa6ff"/><text x="822" y="118" font-family="Arial,sans-serif" font-size="14" fill="#dceafb">99% VaR</text>
+<text x="526" y="474" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" fill="#a7bbd2">Random seed (fixed model configuration)</text>
+</svg>

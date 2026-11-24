@@ -1,0 +1,26 @@
+
+=================================================================
+         Parallel Monte Carlo Risk Engine  —  Results            
+=================================================================
+  Execution
+    Worker processes          : 4
+    Total simulations         : 60000
+    Base seed                 : 42
+    Wall-clock runtime        : 0.0093 s
+-----------------------------------------------------------------
+  Model  (European Call, Black-Scholes / Risk-Neutral GBM)
+    Underlying price    S0    : 100.0000
+    Strike              K     : 100.0000
+    Risk-free rate      r     :   0.0500
+    Volatility          sigma :   0.2000
+    Maturity            T     :   0.2500  years
+    Horizon             dt    : 0.003968  years  [1/252 trading day]
+    Call price at t=0  (BS)  :   4.6150
+-----------------------------------------------------------------
+  Risk Metrics  (1-day PnL, long call position)
+    Mean PnL                  :  +0.003549
+    Std Dev of PnL            :   0.718017
+    95% 1-day VaR            :   1.105452  [max loss w/ 95% confidence]
+    99% 1-day VaR            :   1.508496  [max loss w/ 99% confidence]
+=================================================================
+
